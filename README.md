@@ -6,7 +6,7 @@ Live at **[taufiqwork.com](https://taufiqwork.com)**. This is the source of my p
 
 | Page | What it is |
 | --- | --- |
-| [Home](https://taufiqwork.com) | Entry point with the project cards and latest log |
+| [Home](https://taufiqwork.com) | A one-screen canvas, styled like a design tool: hero, notes, project windows that zoom into each case study, and a Design QA mini-game |
 | [About](https://taufiqwork.com/about) | Who I am, how I work, contact links, resume download |
 | [Tasmi'](https://taufiqwork.com/tasmi) | Case study: a registration and progress-tracking web app for a recitation program, in production |
 | [Solide](https://taufiqwork.com/solide) | Case study: a desktop design tool that puts layout, vector drawing and motion in one canvas |
