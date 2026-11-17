@@ -5,7 +5,7 @@
   function norm(t) { return (t || '').replace(/\s+/g, ' ').replace(/^[0-9\s·.]+/, '').trim().toLowerCase(); }
   document.addEventListener('click', function (e) {
     var el = e.target && e.target.closest ? e.target.closest('a,button') : null;
-    if (!el) return;
+    if (!el || el.closest('[data-stage]')) return; /* the homepage canvas handles its own links (edit mode strips hrefs) */
     var href = el.getAttribute('href');
     if (el.tagName === 'A' && href && href !== '#') return;
     var tgt = norm((el.getAttribute('data-tgt') || '').replace(/^.*·\s*/, ''));
