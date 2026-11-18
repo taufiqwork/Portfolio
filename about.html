@@ -569,6 +569,7 @@ html:not([data-resume-ok]) [data-resume]{display:none!important}
 <a class="ab-cta" href="https://github.com/taufiqwork" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>Browse my code on GitHub</a>
 <a class="ab-cta" data-resume="1" href="/resume.pdf" download="Rahmat-Taufiqurrahman-Resume.pdf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download my resume (PDF)</a>
 </div>
+<p data-hlview="1" data-r="footq" style="flex:1 1 100%;margin:8px 0 0;padding-top:28px;border-top:1px solid rgba(143,180,255,.22);font:600 24px/32px 'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em;color:#EAF1FF;text-wrap:balance"><span data-hl="1" style="padding:0 .12em;margin:0 -.12em;border-radius:3px 8px 4px 9px;background-image:linear-gradient(98deg,rgba(234,88,12,0) 0,rgba(234,88,12,.78) 4%,rgba(194,65,12,.72) 96%,rgba(234,88,12,0) 100%),linear-gradient(94deg,rgba(251,146,60,0) 0,rgba(251,146,60,.5) 5%,rgba(251,146,60,.42) 95%,rgba(251,146,60,0) 100%);background-repeat:no-repeat;background-position:0 88%,0 30%;background-size:0% 62%,0% 38%;-webkit-box-decoration-break:clone;box-decoration-break:clone">The solution</span> is often <span data-hl="1" style="padding:0 .12em;margin:0 -.12em;border-radius:3px 8px 4px 9px;background-image:linear-gradient(98deg,rgba(234,88,12,0) 0,rgba(234,88,12,.78) 4%,rgba(194,65,12,.72) 96%,rgba(234,88,12,0) 100%),linear-gradient(94deg,rgba(251,146,60,0) 0,rgba(251,146,60,.5) 5%,rgba(251,146,60,.42) 95%,rgba(251,146,60,0) 100%);background-repeat:no-repeat;background-position:0 88%,0 30%;background-size:0% 62%,0% 38%;-webkit-box-decoration-break:clone;box-decoration-break:clone">a simple thing nearby</span>. Can you see it?</p>
 </div>
 </section>
 
@@ -624,7 +625,14 @@ class Component extends DCLogic {
     ap(); window.addEventListener('resize', ap);
     this._cutOff = () => window.removeEventListener('resize', ap);
   }
+  hl() {
+    const rm = window.matchMedia && (matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]static=1/.test(location.search)); if (rm) return;
+    const zero = '0% 62%, 0% 38%', full = '100% 62%, 100% 38%', spans = (el) => Array.from(el.querySelectorAll('[data-hl]')).filter((x) => x.getClientRects().length);
+    const play = (x, d) => { clearTimeout(x.__t); x.__t = setTimeout(() => { if (x.__a) x.__a.cancel(); x.__a = x.animate([{ backgroundSize: zero }, { backgroundSize: '100% 62%, 0% 38%', offset: .55 }, { backgroundSize: full }], { duration: 820, easing: 'cubic-bezier(.45,.05,.2,1)', fill: 'forwards' }); }, d); };
+    setTimeout(() => document.querySelectorAll('[data-hlview]').forEach((el) => { if (el.__hv) return; el.__hv = 1; const run = () => spans(el).forEach((x, i) => play(x, 200 + i * 520)); el.addEventListener('mouseenter', run); if (window.IntersectionObserver) { const io = new IntersectionObserver((es) => { if (!es[0].isIntersecting) return; io.disconnect(); run(); }, { threshold: .6 }); io.observe(el); } else run(); }), 300);
+  }
   componentDidMount() {
+    this.hl();
     this._goClick = (e) => { const b = e.target.closest && e.target.closest('[data-go]'); if (b) { e.preventDefault(); this.goTo(b.getAttribute('data-go')); } }; document.addEventListener('click', this._goClick);
     this._spy = () => { if (this._spyR) return; this._spyR = requestAnimationFrame(() => { this._spyR = 0; this.navSpy(); this.prog(); }); };
     window.addEventListener('scroll', this._spy, { passive: true }); window.addEventListener('resize', this._spy);
